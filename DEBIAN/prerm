@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+env >> /tmp/ENV_prerm
+
+if [ "$1" = remove ]; then
+	DIR=/opt/redmine
+	NAME="a_common_libs"
+	# For SELinux we need to use 'runuser' not 'su'
+	if [ -x /sbin/runuser ]
+	then
+	    SU=runuser
+	else
+	    SU=su
+	fi
+
+	bundlecmd="/usr/bin/env RAILS_ENV=production $SU redmine -s /bin/bash $DIR/.rvm/bin/rvm default do bundle"
+	
+	cd $DIR
+	$bundlecmd exec rake redmine:plugins:migrate NAME=$NAME VERSION=0
+fi;

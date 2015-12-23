@@ -1,0 +1,4 @@
+A common libs plugin from RM+
+
+Redmine plugin which optionally enables inclusion of common
+libraries (twitter bootstrap, select2, highcharts, etc.)

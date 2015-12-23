@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+firstrun=0
+
+if [ "$1" != "configure" ]; then
+  exit 0
+fi
+
+# Touch and set permisions
+if [ -d /opt/redmine ]; then
+    chown -R redmine:redmine /opt/redmine
+fi
+
+if [ -x "/etc/init.d/redmine" ]; then
+    /etc/init.d/redmine upgrade || echo "Upgrade failed, please check logs"
+fi
